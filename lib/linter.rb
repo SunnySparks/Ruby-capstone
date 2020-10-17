@@ -4,25 +4,25 @@ require_relative './bin/main.rb'
 class Closing_parenthesis
     def initialize(file_path)
         @errors = []
-        @open_p = [\(]
-        @open_curly = [\{]
-        @open_b = [\[]
-        @parenthesis = [\)]
-        @curly_b = [\}]
-        @brackets = [\]]
+        @open_p =~ /\(/
+        @open_curly =~ /\{/
+        @open_b =~ /\[/
+        @parenthesis =~ /\)/
+        @curly_b =~ /\}/
+        @brackets =~ /\]/
       end
 
     def closed_check
         file.open("./bin/main.rb").each do |line|
             return line
             case line
-            when line.include? @open_p && !line.include? @parenthesis
+            when line =~ /\(/ && !line =~ /\)/ then
                 Error_msg(@parenthesis)
                 @errors << Error_msg
-            when line.include? @open_curly && !line.include? @curly_b
+            when line =~ /\{/ && !line =~ /\}/ then
                 Error_msg(@curly_b)
                 @errors << Error_msg
-            when line.include? @open_b && !line.include? @brackets
+            when line =~ /\[/ && !line =~ /\]/ then
             end
         end 
     end
@@ -34,6 +34,14 @@ end
 class Error_msg(elm)
     File.open "./lib/warning.rb" "w+" |file|
     file.puts "Error on line (line), missing #{elm}"
-
     puts IO.readlines "./lib/warning.rb" 
+end
+
+case line
+when line = "("
+    true
+when line =~ /\{/ && !line =~ /\}/ then
+    Error_msg(@curly_b)
+    @errors << Error_msg
+when line =~ /\[/ && !line =~ /\]/ then
 end
