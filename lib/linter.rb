@@ -1,9 +1,9 @@
-require 'strscan'
-require_relative './bin/main.rb'
+require './bin/main.rb'
 #This class is meant to check for main.rb file and see if parentheses are closed, it will send an error message in case it isn't
 class Closing_parenthesis
     def initialize(file_path)
         @errors = []
+        @all_braces = []
         @open_p =~ /\(/
         @open_curly =~ /\{/
         @open_b =~ /\[/
@@ -16,32 +16,41 @@ class Closing_parenthesis
         file.open("./bin/main.rb").each do |line|
             return line
             case line
-            when line =~ /\(/ && !line =~ /\)/ then
-                Error_msg(@parenthesis)
-                @errors << Error_msg
-            when line =~ /\{/ && !line =~ /\}/ then
-                Error_msg(@curly_b)
-                @errors << Error_msg
-            when line =~ /\[/ && !line =~ /\]/ then
+            when line =~ /\(/ then 
+                @all_braces << @open_p
+            when line =~ /\)/ then
+                @unclosed_p = @all_braces.pop
+            when line =~ /\{/ then
+                @all_braces << @open_curly
+            when line =~ /\}/ then
+                @unclosed_c = @all_braces.pop
+            when line =~ /\[/ then
+                @all_braces << @open_b
+            when line =~ /\]/ then
+                @unclosed_b = @all_braces.pop
             end
         end 
+        if @all_braces.odd? then
+            Check_unclosed
+        end
     end
-
-
 end
 
-#The purpose of this class is to send an error message 
-class Error_msg(elm)
-    File.open "./lib/warning.rb" "w+" |file|
-    file.puts "Error on line (line), missing #{elm}"
-    puts IO.readlines "./lib/warning.rb" 
-end
 
-case line
-when line = "("
-    true
-when line =~ /\{/ && !line =~ /\}/ then
-    Error_msg(@curly_b)
-    @errors << Error_msg
-when line =~ /\[/ && !line =~ /\]/ then
+
+class Check_unclosed
+    def checker(elm)
+        unclosed = @all_braces.last
+        case unclosed
+        when unclosed == "(" then
+            elm = ")"
+            puts "Error on line (line), missing #{elm}"
+        when unclosed == "[" then
+            elm = "]"
+            puts "Error on line (line), missing #{elm}"
+        when unclosed == "{" then
+            elm = "}"
+            puts "Error on line (line), missing #{elm}"
+        end
+    end
 end
