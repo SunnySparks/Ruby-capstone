@@ -1,6 +1,4 @@
 #!/usr/bin/ruby
+require './lib/linter.rb'
 
-
-#test code
-#good 
-arr = []
+parenthesis = ClosingParenthesis.new('./lib/linter.rb')

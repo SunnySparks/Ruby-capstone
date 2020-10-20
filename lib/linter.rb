@@ -1,56 +1,42 @@
-require './bin/main.rb'
-#This class is meant to check for main.rb file and see if parentheses are closed, it will send an error message in case it isn't
-class Closing_parenthesis
-    def initialize(file_path)
-        @errors = []
-        @all_braces = []
-        @open_p =~ /\(/
-        @open_curly =~ /\{/
-        @open_b =~ /\[/
-        @parenthesis =~ /\)/
-        @curly_b =~ /\}/
-        @brackets =~ /\]/
+require './lib/reader.rb'
+# This class is meant to check for main.rb file and see if parentheses are closed, it will send an error message in case it isn't
+revision = CheckUnclosed.new
+class ClosingParenthesis
+  attr_reader :file_path
+  def initialize(file_path)
+    @errors = []
+    @open_p =~ /\(/
+    @open_curly =~ /\{/
+    @open_b =~ /\[/
+    @parenthesis =~ /\)/
+    @curly_b =~ /\}/
+    @brackets =~ /\]/
+    @file_path = file_path
+    @all_braces = []
+  end
+
+  def closed_check
+    file.open(@file_path).each do |line|
+      file_data = file.read
+      case line
+      when line =~ /\(/
+        @all_braces << @open_p
+      when line =~ /\)/
+        @unclosed_p = @all_braces.pop
+      when line =~ /\{/
+        @all_braces << @open_curly
+      when line =~ /\}/
+        @unclosed_c = @all_braces.pop
+      when line =~ /\[/
+        @all_braces << @open_b
+      when line =~ /\]/
+        @unclosed_b = @all_braces.pop
       end
-
-    def closed_check
-        file.open("./bin/main.rb").each do |line|
-            return line
-            case line
-            when line =~ /\(/ then 
-                @all_braces << @open_p
-            when line =~ /\)/ then
-                @unclosed_p = @all_braces.pop
-            when line =~ /\{/ then
-                @all_braces << @open_curly
-            when line =~ /\}/ then
-                @unclosed_c = @all_braces.pop
-            when line =~ /\[/ then
-                @all_braces << @open_b
-            when line =~ /\]/ then
-                @unclosed_b = @all_braces.pop
-            end
-        end 
-        if @all_braces.odd? then
-            Check_unclosed
-        end
+      return line
     end
-end
-
-
-
-class Check_unclosed
-    def checker(elm)
-        unclosed = @all_braces.last
-        case unclosed
-        when unclosed == "(" then
-            elm = ")"
-            puts "Error on line (line), missing #{elm}"
-        when unclosed == "[" then
-            elm = "]"
-            puts "Error on line (line), missing #{elm}"
-        when unclosed == "{" then
-            elm = "}"
-            puts "Error on line (line), missing #{elm}"
-        end
+    if @all_braces.length.odd?
+      revision
     end
+    file.close
+  end
 end
