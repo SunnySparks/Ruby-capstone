@@ -2,48 +2,51 @@
 
 class ClosingParenthesis
   attr_reader :file_path
-  attr_accessor :all_braces, :errors, :erreurs
+  attr_accessor :all_braces, :errors, :erreurs, :les_erreurs, :les_lignes
   def initialize(file_path)
     @errors = []
     @erreurs = {}
     @file_path = file_path
+    @les_erreurs = []
+    @les_lignes = []
   end
 
   def closed_check(file_path)
     File.open(file_path).each_with_index do |element, line|
       element.length.times do |i|
+        linea = line + 1
         case element[i]
         when '('
-          @erreurs.store('(', line)
+          @les_erreurs.push([element[i], linea.to_s])
         when ')'
-          @erreurs.delete('(')
+          @les_erreurs.pop
         when '{'
-          @erreurs.store('{', line)
+          @les_erreurs.push([element[i], linea.to_s])
         when '}'
-          @erreurs.delete('{')
+          @les_erreurs.pop
         when '['
-          @erreurs.store('[', line)
+          @les_erreurs.push([element[i], linea.to_s])
         when ']'
-          @erreurs.delete('[')
+          @les_erreurs.pop
         end
       end
     end
   end
 
   def trigger_errors
-    unless @erreurs.empty?
-      @erreurs.each do |el, line|
-        linea = line + 1
-        case el
-        when '('
-          elm = ')'
-          @errors.push("Error, missing #{elm} on line #{linea}")
-        when '['
-          elm = ']'
-          @errors.push("Error, missing #{elm} on line #{linea}")
-        when '{'
-          elm = '}'
-          @errors.push("Error, missing #{elm} on line #{linea}")
+    unless @les_erreurs.empty?
+      @les_erreurs.each do |el|
+        el.length.times do |i|
+          if el[i] == '('
+            elm = ')'
+            @errors.push("Error, missing #{el[i]} on line #{el[i + 1]}")
+          elsif el[i] == '['
+            elm = ']'
+            @errors.push("Error, missing #{el[i]} on line #{el[i + 1]}")
+          elsif el[i] == '{'
+            elm = '}'
+            @errors.push("Error, missing #{el[i]} on line #{el[i + 1]}")
+          end
         end
       end
     end
