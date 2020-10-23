@@ -41,6 +41,10 @@ A lint project for detecting unclosed braces and parentheses
 
 ![Code](Code.png)
 
+- In case there are no syntax errors in your file, you will get a message like this one, it will show you a message that there are no errors, and also will show you the path to your file 
+
+![No Errors](No_ofenses.png)
+
 **IMPORTANT** If you wish to rename your file don't forget to change the route of the linter, in order to do so, open the Main.rb file and change the name of the route as it is shown in the picture below
 
 ![Rename](Rename.png)
