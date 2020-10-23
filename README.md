@@ -8,7 +8,7 @@ A lint project for detecting unclosed braces and parentheses
 
 ## Getting Started
 
-![preview](Preview.png)
+![preview](Preview2.png)
 
 **This program will throw you error messages when there is a missing Parenthesis ), Curly bracket } or Square bracket ]**
 
