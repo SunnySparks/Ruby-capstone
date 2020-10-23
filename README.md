@@ -33,7 +33,7 @@ A lint project for detecting unclosed braces and parentheses
 
 ![Execute](Execute.png)
 
-- Then the program will show you in which lines there are missing parentheses
+- Then the program will show you the path of your file and also in which lines there are missing parentheses
 
 ![Display](Result_display.png)
 
