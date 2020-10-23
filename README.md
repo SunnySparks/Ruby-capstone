@@ -22,6 +22,7 @@ A lint project for detecting unclosed braces and parentheses
 - Clone this repository into your computer and open it 
 
 - Open file.rb in your prefered code editor and write your code inside of it and save your changes 
+
 ![First step](Step_1.png)
 
 ### Usage and tests
