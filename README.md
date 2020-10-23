@@ -4,7 +4,7 @@ A lint project for detecting unclosed braces and parentheses
 ## Built With
 
 - Ruby
--Robocop
+- Robocop
 
 ## Getting Started
 
@@ -20,6 +20,7 @@ A lint project for detecting unclosed braces and parentheses
 ### Instructions
 
 - Clone this repository into your computer and open it 
+![Clone](Clone.png)
 - Open file.rb in your prefered code editor and write your code inside of it and save your changes 
 ![First step](Step_1.png)
 
@@ -36,9 +37,10 @@ A lint project for detecting unclosed braces and parentheses
 
 ![Code](Code.png)
 
-**IMPORTANT** If you wish to rename your file, don't forget to change the route of the linter, in order to do so, open the Main.rb file and change the name of the route as it is shown in the picture below
+**IMPORTANT** If you wish to rename your file don't forget to change the route of the linter, in order to do so, open the Main.rb file and change the name of the route as it is shown in the picture below
 ![Rename](Rename.png)
 
+**That's it!**  I hope this code will help you find your missing elements 😀
 
 ## Author
 
