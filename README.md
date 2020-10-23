@@ -30,6 +30,7 @@ A lint project for detecting unclosed braces and parentheses
 ### Usage and tests
 
 - in your terminal find the route to the repository and execute the main.rb file 
+
 ![Execute](Execute.png)
 
 - Then the progran will show you in which lines there are missing parentheses
@@ -41,6 +42,7 @@ A lint project for detecting unclosed braces and parentheses
 ![Code](Code.png)
 
 **IMPORTANT** If you wish to rename your file don't forget to change the route of the linter, in order to do so, open the Main.rb file and change the name of the route as it is shown in the picture below
+
 ![Rename](Rename.png)
 
 **That's it!**  I hope this code will help you find your missing elements 😀
@@ -56,12 +58,13 @@ A lint project for detecting unclosed braces and parentheses
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
+Any feedback is appreciated
 
 Feel free to check the [issues page](issues/).
 
 ## Show your support
 
-Give a ⭐️ if you like this project!
+Give a ⭐️ if you like this project, this will help me grow as a developer!
 
 ## 📝 License
 
