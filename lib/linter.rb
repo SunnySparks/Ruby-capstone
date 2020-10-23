@@ -52,4 +52,8 @@ class ClosingParenthesis
     end
     @errors
   end
+
+  def display_path
+    @file_path
+  end
 end

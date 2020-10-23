@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - './file.rb'
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
