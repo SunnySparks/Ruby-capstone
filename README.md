@@ -33,9 +33,9 @@ A lint project for detecting unclosed braces and parentheses
 
 ![Execute](Execute.png)
 
-- Then the progran will show you in which lines there are missing parentheses
+- Then the program will show you in which lines there are missing parentheses
 
-![Display](Execution_display.png)
+![Display](Result_display.png)
 
 - As you can see, the error messages match the lines where the missing parentheses are 
 
