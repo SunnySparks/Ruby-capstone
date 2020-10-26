@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - './file.rb'
+    - './correct_syntax.rb'
 
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -36,4 +37,10 @@ Lint/UselessAssignment:
   Enabled: false
 
 Lint/ScriptPermission:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
   Enabled: false
