@@ -22,7 +22,7 @@ class ClosingParenthesis
           @index_p = @les_erreurs.index(@open_p)
         when ')'
           @num_p = @index_p.to_i
-          if @element_p[0][0].include?('(')
+          if !@les_erreurs.empty? && @element_p[0][0].include?('(')
             @delete_p = @les_erreurs.delete_at(@num_p)
           else
             seek_and_destroy('(')
@@ -33,7 +33,7 @@ class ClosingParenthesis
           @index_curly = @les_erreurs.index(@open_curly)
         when '}'
           @num_curly = @index_curly.to_i
-          if @element_curly[0][0].include?('{')
+          if !@les_erreurs.empty? && @element_curly[0][0].include?('{')
             @delete_curly = @les_erreurs.delete_at(@num_curly)
           else
             seek_and_destroy('{')
@@ -44,7 +44,7 @@ class ClosingParenthesis
           @index_b = @les_erreurs.index(@open_b)
         when ']'
           @num_b = @index_b.to_i
-          if @element_b[0][0].include?('[')
+          if !@les_erreurs.empty? && @element_b[0][0].include?('[')
             @delete_b = @les_erreurs.delete_at(@num_b)
           else
             seek_and_destroy('[')

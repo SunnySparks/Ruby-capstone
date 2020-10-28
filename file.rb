@@ -9,6 +9,7 @@ end
 
 # Code with errors
 
+
 class DummyCode2
   def initialize(*
     dummy_array = [1, 2, 3, 4, 5
