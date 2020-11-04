@@ -26,5 +26,5 @@ class NegativeCases
     missing_square = [ 10, 20, (30), "a", "oops", "no"
     missing_a_parenthesis = [ :name => 'sammy', :age => (8 , :occupation => 'student' ]
     missing_2_curly = { :fruit => 'orange', {:color => ('red')}, { :feelings => ['happiness', 'love']
-  end
+  end)]})))]})))]}] 
 end

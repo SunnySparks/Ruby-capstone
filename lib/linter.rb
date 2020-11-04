@@ -2,7 +2,7 @@
 
 class ClosingParenthesis
   attr_reader :file_path
-  attr_accessor :all_braces, :errors, :erreurs, :les_erreurs, :les_lignes, :opened, :closed, :parentheses, :curly_braces, :square_brackets, :parentheses_open, :parentheses_closed, :total_parentheses
+  attr_accessor :all_braces, :errors, :erreurs, :les_erreurs, :les_lignes, :opened, :closed, :parentheses, :curly_braces, :square_brackets
   def initialize(file_path)
     @errors = []
     @erreurs = {}
@@ -11,9 +11,6 @@ class ClosingParenthesis
     @opened = []
     @closed = []
     @parentheses = []
-    @parentheses_open = []
-    @parentheses_closed = []
-    @total_parentheses
     @pr = []
     @square_brackets = []
     @curly_braces = []
@@ -32,22 +29,26 @@ class ClosingParenthesis
         @linea = line + 1
         case element[i]
         when '('
-          @open_p = @parentheses_open.push([element[i], @linea.to_s])
+          @open_p = @parentheses.unshift([element[i], @linea.to_s])
         when ')'
-          @closed_p = @parentheses_closed.push([element[i], @linea.to_s])
+          @closed_p = @parentheses.unshift([element[i], @linea.to_s])
         when '{'
-          @open_curly = @curly_braces.push([element[i], @linea.to_s])
+          @open_curly = @curly_braces.unshift([element[i], @linea.to_s])
         when '}'
-          @closed_curly = @curly_braces.push([element[i], @linea.to_s])
+          @closed_curly = @curly_braces.unshift([element[i], @linea.to_s])
           @curly_c
         when '['
-          @open_b = @square_brackets.push([element[i], @linea.to_s])
+          @open_b = @square_brackets.unshift([element[i], @linea.to_s])
         when ']'
-          @closed_p = @square_brackets.push([element[i], @linea.to_s])
+          @closed_p = @square_brackets.unshift([element[i], @linea.to_s])
         end
       end
     end
     parentheses_check
+    curly_braces_check
+    square_brackets_check
+    trigger_errors
+    sorting_errors
     #trigger_parentheses
     #trigger_curly
     #trigger_square
@@ -57,34 +58,103 @@ class ClosingParenthesis
   end
 
   def parentheses_check
-    @total_parentheses = @parentheses_open.zip @parentheses_closed
-    @total_parentheses.each do |el|
-      #el.length.times do |i, num|
-      #p el
-      #p el[0]
-      #p el[1]
-        #el.length.times do |i, num|
-        if el[1] != nil
-        if el[0][1] != el [1][1] && el[0][0] != el[1][0]
-          @errors.push(el[0])
-        end
-        else
-          @errors.push(el[0]) 
+    for i in 1..@parentheses.length-1 do
+      if @parentheses[i-1][0] == ")" && @parentheses[i][0] == ")"
+        @errors.unshift(@parentheses[i-1])
+      elsif @parentheses[i-1][0] == "(" && @parentheses[i][0] == "("
+        @errors.unshift(@parentheses[i])
+      elsif @parentheses[i-1][0] == "}" && @parentheses[i][0] == "{" && @parentheses[i-1][1] != @parentheses[i][1]
+        @errors.unshift(@parentheses[i-1])
+      elsif @parentheses[i-1][0] == "{" && @parentheses[i][0] == "}" && @parentheses[i-1][1] == @parentheses[i][1]
+        @errors.unshift(@parentheses[i-1])
       end
-      #nd
-        #if el[1] == nil
-        #  puts "hello"
-        #  puts el[1]
+=begin
+      p @parentheses[i-1][0]
+      p @parentheses[i][0]
+      if @parentheses[i-1][0] == "("
+        if @parentheses[i][0] == "("
+          #puts @parentheses[i-1][1]
+          #puts @parentheses[i][1]
+        puts "Repeated in line #{@parentheses[i-1][1]}"
+        #puts "they are different #{@parentheses[i][0]}, line #{@parentheses[i][1]}"
+        #if  @parentheses[i-1][1] == @parentheses[i][1]
+        #  puts "same line #{@parentheses[i][1]}"
         #end
-        #p el[i][1]
-        #p el[i+1][1]
-        #p "num #{el[i + 1]}"
-        #if el[i][1] == nil
-          #puts "hello #{el[num]}"
-        #end
-      #end
+        @errors.push(@parentheses[i-1])
+        end
+      elsif @parentheses[i-1][0] == ")"
+        if @parentheses[i][0] == ")"
+          puts "Repeated in line #{@parentheses[i-1][1]}"
+          @errors.push(@parentheses[i-1])
+        end
+      end
+=end
     end
-    puts @errors
+  end
+
+  def curly_braces_check
+    for i in 1..@curly_braces.length-1 do
+      if @curly_braces[i-1][0] == "}" && @curly_braces[i][0] == "}"
+        @errors.unshift(@curly_braces[i-1])
+      elsif @curly_braces[i-1][0] == "{" && @curly_braces[i][0] == "{"
+        @errors.unshift(@curly_braces[i])
+      elsif @curly_braces[i-1][0] == "}" && @curly_braces[i][0] == "{" && @curly_braces[i-1][1] != @curly_braces[i][1]
+      @errors.unshift(@curly_braces[i-1])
+      elsif @curly_braces[i-1][0] == "{" && @curly_braces[i][0] == "}" && @curly_braces[i-1][1] == @curly_braces[i][1]
+      @errors.unshift(@curly_braces[i-1])
+      end
+    end
+  end
+
+  def square_brackets_check
+    for i in 1..@square_brackets.length-1 do
+      if @square_brackets[i-1][0] == "]" && @square_brackets[i][0] == "]"
+        @errors.unshift(@square_brackets[i-1])
+      elsif @square_brackets[i-1][0] == "[" && @square_brackets[i][0] == "["
+        @errors.unshift(@square_brackets[i])
+      elsif @square_brackets[i-1][0] == "]" && @square_brackets[i][0] == "[" && @square_brackets[i-1][1] != @square_brackets[i][1]
+      @errors.unshift(@square_brackets[i-1])
+      elsif @square_brackets[i-1][0] == "[" && @square_brackets[i][0] == "]" && @square_brackets[i-1][1] == @square_brackets[i][1]
+      @errors.unshift(@square_brackets[i-1])
+      end
+    end
+  end
+
+  def trigger_errors
+    unless @errors.empty?
+      @errors.each do |el|
+        el.length.times do |i|
+          if el[i] == '('
+            elm = ')'
+            @les_erreurs.push("Error, missing #{elm} on line #{el[i + 1]}")
+          elsif el[i] == ')'
+            elm = '('
+            @les_erreurs.push("Error, missing #{elm} on line #{el[i + 1]}")
+          elsif el[i] == '['
+            elm = ']'
+            @les_erreurs.push("Error, missing #{elm} on line #{el[i + 1]}")
+          elsif el[i] == ']'
+            elm = '['
+            @les_erreurs.push("Error, missing #{elm} on line #{el[i + 1]}")
+          elsif el[i] == '{'
+            elm = '}'
+            @les_erreurs.push("Error, missing #{elm} on line #{el[i + 1]}")
+          elsif el[i] == '}'
+            elm = '{'
+            @les_erreurs.push("Error, missing #{elm} on line #{el[i + 1]}")
+          end
+        end
+      end
+    end
+    @les_erreurs
+  end
+
+  def sorting_errors
+    @les_erreurs.each do |el|
+      el.length.times do |i|
+        puts el
+      end
+    end
   end
 =begin
   def trigger_parentheses
@@ -221,7 +291,7 @@ class ClosingParenthesis
   end
 =end
   def puts_errors
-    @errors
+    @les_erreurs
   end
 =begin
   def parentheses_add(file_path)
