@@ -47,3 +47,9 @@ Metrics/PerceivedComplexity:
 
 Style/IdenticalConditionalBranches:
   Enabled: false
+
+Style/For:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
