@@ -1,5 +1,3 @@
-# This class is meant to check for main.rb file and see if parentheses are closed, it will send an error message in case it isn't
-
 class ClosingParenthesis
   attr_reader :file_path
   attr_accessor :all_braces, :errors, :erreurs, :les_erreurs, :les_lignes, :opened, :closed, :parentheses, :curly_braces, :square_brackets
@@ -47,8 +45,8 @@ class ClosingParenthesis
     parentheses_check
     curly_braces_check
     square_brackets_check
-    trigger_errors
     sorting_errors
+    trigger_errors
     #trigger_parentheses
     #trigger_curly
     #trigger_square
@@ -150,11 +148,20 @@ class ClosingParenthesis
   end
 
   def sorting_errors
-    @les_erreurs.each do |el|
-      el.length.times do |i|
-        puts el
-      end
-    end
+    p @errors
+      array_length = @errors.size
+      return @errors if array_length <= 1    
+      loop do
+        swapped = false
+        (array_length-1).times do |i|
+          if @errors[i][1] > @errors[i+1][1]
+            @errors[i], @errors[i+1] = @errors[i+1], @errors[i]
+            swapped = true
+          end
+        end    
+        break if not swapped
+      end   
+      @errors
   end
 =begin
   def trigger_parentheses
