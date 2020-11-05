@@ -10,7 +10,7 @@ A lint project for detecting unclosed braces and parentheses
 
 ![preview](Preview.png)
 
-**This program will throw you error messages when there is a missing close Parenthesis ), Curly bracket } or Square bracket ]**
+**This program will throw you error messages when there is a missing Parenthesis ), Curly bracket } or Square bracket ]**
 
 ### Prerequisites
 
@@ -49,7 +49,7 @@ A lint project for detecting unclosed braces and parentheses
 
 ![Rename](Renamed.png)
 
-**That's it!**  I hope this code will help you find your missing close elements 😀
+**That's it!**  I hope this code will help you find your missing elements 😀
 
 ## Author
 
