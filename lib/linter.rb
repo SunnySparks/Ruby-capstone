@@ -1,27 +1,16 @@
 class ClosingParenthesis
   attr_reader :file_path
-  attr_accessor :all_braces, :errors, :erreurs, :les_erreurs, :les_lignes, :opened, :closed, :parentheses, :curly_braces, :square_brackets
+  attr_accessor :all_braces, :errors, :les_erreurs, :parentheses, :curly_braces, :square_brackets
   def initialize(file_path)
     @errors = []
-    @erreurs = {}
     @file_path = file_path
     @les_erreurs = []
-    @opened = []
-    @closed = []
     @parentheses = []
-    @pr = []
     @square_brackets = []
     @curly_braces = []
-    @les_lignes = []
   end
 
   def couples_add(file_path)
-    @par_open = 0
-    @par_closed = 0
-    @curly_open = 0
-    @curly_closed = 0
-    @square_open = 0
-    @square_closed = 0
     File.open(file_path).each_with_index do |element, line|
       element.length.times do |i|
         @linea = line + 1
@@ -34,7 +23,6 @@ class ClosingParenthesis
           @open_curly = @curly_braces.unshift([element[i], @linea.to_s])
         when '}'
           @closed_curly = @curly_braces.unshift([element[i], @linea.to_s])
-          @curly_c
         when '['
           @open_b = @square_brackets.unshift([element[i], @linea.to_s])
         when ']'
@@ -46,52 +34,61 @@ class ClosingParenthesis
     curly_braces_check
     square_brackets_check
     sorting_errors
-    trigger_errors
+    displayer_errors
   end
 
   def parentheses_check
-    for i in 1..@parentheses.length - 1 do
-      if @parentheses[i - 1][0] == ')' && @parentheses[i][0] == ')'
-        @errors.unshift(@parentheses[i - 1])
-      elsif @parentheses[i - 1][0] == '(' && @parentheses[i][0] == '('
-        @errors.unshift(@parentheses[i])
-      elsif @parentheses[i - 1][0] == '}' && @parentheses[i][0] == '{' && @parentheses[i - 1][1] != @parentheses[i][1]
-        @errors.unshift(@parentheses[i - 1])
-      elsif @parentheses[i - 1][0] == '{' && @parentheses[i][0] == '}' && @parentheses[i - 1][1] == @parentheses[i][1]
-        @errors.unshift(@parentheses[i - 1])
+    length = @parentheses.length - 1
+    length_after = length
+    i = 1
+    while i < length
+      if @parentheses[i - 1][0] == ')' && @parentheses[i][0] == '(' && @parentheses[i][1] == @parentheses[i - 1][1]
+        delete = @parentheses.delete_at(i)
+        delete_previous = @parentheses.delete_at(i - 1)
+        break if @parentheses[i].nil?
+
+        i = 1
       end
+      i = i + 1
     end
+    @errors = @errors + @parentheses
   end
 
   def curly_braces_check
-    for i in 1..@curly_braces.length - 1 do
-      if @curly_braces[i - 1][0] == '}' && @curly_braces[i][0] == '}'
-        @errors.unshift(@curly_braces[i - 1])
-      elsif @curly_braces[i - 1][0] == '{' && @curly_braces[i][0] == '{'
-        @errors.unshift(@curly_braces[i])
-      elsif @curly_braces[i - 1][0] == '}' && @curly_braces[i][0] == '{' && @curly_braces[i - 1][1] != @curly_braces[i][1]
-        @errors.unshift(@curly_braces[i - 1])
-      elsif @curly_braces[i - 1][0] == '{' && @curly_braces[i][0] == '}' && @curly_braces[i - 1][1] == @curly_braces[i][1]
-        @errors.unshift(@curly_braces[i - 1])
+    length = @curly_braces.length - 1
+    length_after = length
+    i = 1
+    while i < length
+      if @curly_braces[i - 1][0] == '}' && @curly_braces[i][0] == '{' && @curly_braces[i][1] == @curly_braces[i - 1][1]
+        delete = @curly_braces.delete_at(i)
+        delete_previous = @curly_braces.delete_at(i - 1)
+        break if @curly_braces[i].nil?
+
+        i = 1
       end
+      i = i + 1
     end
+    @errors = @errors + @curly_braces
   end
 
   def square_brackets_check
-    for i in 1..@square_brackets.length - 1 do
-      if @square_brackets[i - 1][0] == ']' && @square_brackets[i][0] == ']'
-        @errors.unshift(@square_brackets[i - 1])
-      elsif @square_brackets[i - 1][0] == '[' && @square_brackets[i][0] == '['
-        @errors.unshift(@square_brackets[i])
-      elsif @square_brackets[i - 1][0] == ']' && @square_brackets[i][0] == '[' && @square_brackets[i - 1][1] != @square_brackets[i][1]
-        @errors.unshift(@square_brackets[i - 1])
-      elsif @square_brackets[i - 1][0] == '[' && @square_brackets[i][0] == ']' && @square_brackets[i - 1][1] == @square_brackets[i][1]
-        @errors.unshift(@square_brackets[i - 1])
+    length = @square_brackets.length - 1
+    length_after = length
+    i = 1
+    while i < length
+      if @square_brackets[i - 1][0] == ']' && @square_brackets[i][0] == '[' && @square_brackets[i][1] == @square_brackets[i - 1][1]
+        delete = @square_brackets.delete_at(i)
+        delete_previous = @square_brackets.delete_at(i - 1)
+        break if @square_brackets[i].nil?
+
+        i = 1
       end
+      i = i + 1
     end
+    @errors = @errors + @square_brackets
   end
 
-  def trigger_errors
+  def displayer_errors
     unless @errors.empty?
       @errors.each do |el|
         el.length.times do |i|

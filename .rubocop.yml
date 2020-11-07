@@ -53,3 +53,6 @@ Style/For:
 
 Metrics/ClassLength:
   Enabled: false
+
+Style/SelfAssignment:
+  Enabled: false
