@@ -56,3 +56,6 @@ Metrics/ClassLength:
 
 Style/SelfAssignment:
   Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false

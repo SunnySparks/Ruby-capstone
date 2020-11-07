@@ -46,6 +46,7 @@ class ClosingParenthesis
         delete = @parentheses.delete_at(i)
         delete_previous = @parentheses.delete_at(i - 1)
         break if @parentheses[i].nil?
+
         i = 1
       end
       i = i + 1
@@ -53,7 +54,7 @@ class ClosingParenthesis
     if @parentheses.length == 2
       if @parentheses[0][0] == @parentheses[1][0]
         @errors = @errors + @parentheses
-      else 
+      else
         @errors = @errors
       end
     else
@@ -70,6 +71,7 @@ class ClosingParenthesis
         delete = @curly_braces.delete_at(i)
         delete_previous = @curly_braces.delete_at(i - 1)
         break if @curly_braces[i].nil?
+
         i = 1
       end
       i = i + 1
@@ -77,7 +79,7 @@ class ClosingParenthesis
     if @curly_braces.length == 2
       if @curly_braces[0][0] == @curly_braces[1][0]
         @errors = @errors + @curly_braces
-      else 
+      else
         @errors = @errors
       end
     else
@@ -94,6 +96,7 @@ class ClosingParenthesis
         delete = @square_brackets.delete_at(i)
         delete_previous = @square_brackets.delete_at(i - 1)
         break if @square_brackets[i].nil?
+
         i = 1
       end
       i = i + 1
@@ -101,7 +104,7 @@ class ClosingParenthesis
     if @square_brackets.length == 2
       if @square_brackets[0][0] == @square_brackets[1][0]
         @errors = @errors + @square_brackets
-      else 
+      else
         @errors = @errors
       end
     else
