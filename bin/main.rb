@@ -1,25 +1,12 @@
 #!/usr/bin/ruby
-require './lib/linter.rb'
+require_relative '../lib/linter'
 
-# This code should trigger errors
-error_trigger = ClosingParenthesis.new('./file.rb')
-error_trigger.closed_check('./file.rb')
+error_trigger = ClosingParenthesis.new(ARGV.first)
+error_trigger.couples_add(ARGV.first)
 
-if error_trigger.les_erreurs.empty?
-  puts 'No offenses detected in', error_trigger.display_path
+if error_trigger.errors.empty?
+  puts 'File name: ', error_trigger.display_path, 'No offenses detected'
 else
-  puts 'File: ', error_trigger.display_path
-  puts error_trigger.trigger_errors
-end
-
-# This code shouldn't trigger any error
-
-right_syntax = ClosingParenthesis.new('./correct_syntax.rb')
-right_syntax.closed_check('./correct_syntax.rb')
-
-if right_syntax.les_erreurs.empty?
-  print 'No offenses detected in', right_syntax.display_path
-else
-  puts 'File: ', right_syntax.display_path
-  puts right_syntax.trigger_errors
+  puts 'File name: ', error_trigger.display_path
+  puts error_trigger.puts_errors
 end

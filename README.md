@@ -1,4 +1,4 @@
-# Ruby-capstone
+# Ruby Capstone project. A Detector for unclosed parentheses
 A lint project for detecting unclosed braces and parentheses
 
 ## Built With
@@ -29,21 +29,25 @@ A lint project for detecting unclosed braces and parentheses
 
 ### Usage and tests
 
-- in your terminal find the route to the repository and execute the main.rb file 
+- in your terminal find the route to the repository and execute the main.rb file, remember to put next to it the name of the file "file.rb" 
 
-![Execute](Execute.png)
+![Execute](Execute2.png)
 
-- Then the progran will show you in which lines there are missing parentheses
+- Then the program will show you the path of your file and also in which lines there are missing close parentheses
 
-![Display](Execution_display.png)
+![Display](Result_display2.png)
 
 - As you can see, the error messages match the lines where the missing parentheses are 
 
 ![Code](Code.png)
 
-**IMPORTANT** If you wish to rename your file don't forget to change the route of the linter, in order to do so, open the Main.rb file and change the name of the route as it is shown in the picture below
+- In case there are no syntax errors in your file, you will get a message like this one, it will show you a message that there are no errors, and also will show you the path to your file 
 
-![Rename](Rename.png)
+![No Errors](No_offenses2.png)
+
+**IMPORTANT** If you wish to rename your file don't forget to change the route to said file, in order to do so just replace the old name for the new one when executing the main.rb file 
+
+![Rename](Renamed.png)
 
 **That's it!**  I hope this code will help you find your missing elements 😀
 
